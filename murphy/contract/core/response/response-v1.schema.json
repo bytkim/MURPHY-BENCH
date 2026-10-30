@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MURPHY v1 response",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1"
+    },
+    "build_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "target_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "condition": {
+      "$ref": "../../common/common-v1.schema.json#/$defs/condition"
+    },
+    "mode": {
+      "enum": [
+        "nonstream",
+        "stream"
+      ]
+    },
+    "repeat": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "request": {
+      "type": "object"
+    },
+    "started_at": {
+      "type": "string"
+    },
+    "elapsed_seconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "http_status": {
+      "anyOf": [
+        {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 599
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "status": {
+      "enum": [
+        "complete",
+        "incomplete",
+        "http_error",
+        "parse_error",
+        "connection_error",
+        "timeout",
+        "body_limit"
+      ]
+    },
+    "error": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "body_base64": {
+      "type": "string"
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "string"
+          },
+          "payload": {},
+          "event": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "data",
+          "payload",
+          "event"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "chunks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "token_ids": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "records": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "content": {
+            "type": "string"
+          },
+          "reasoning_content": {
+            "type": "string"
+          },
+          "finish": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "token_ids",
+          "records",
+          "content",
+          "reasoning_content",
+          "finish"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "build_id",
+    "run_id",
+    "target_id",
+    "task_id",
+    "condition",
+    "mode",
+    "repeat",
+    "request",
+    "started_at",
+    "elapsed_seconds",
+    "http_status",
+    "status",
+    "error",
+    "body_base64",
+    "events",
+    "chunks"
+  ],
+  "additionalProperties": false
+}

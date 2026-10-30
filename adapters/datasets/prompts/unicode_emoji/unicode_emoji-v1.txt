@@ -1,0 +1,3 @@
+Output exactly the emoji followed by its supplied English name, using {emoji | name}. Return only that single entry.
+Emoji: $sequence
+English name: $name

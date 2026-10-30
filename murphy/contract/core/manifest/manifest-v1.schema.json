@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MURPHY v1 manifest",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1"
+    },
+    "dataset": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "build_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "tasks_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "task_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "policy": {
+          "type": "object",
+          "properties": {
+            "policy_id": {"type": "string"}, "revision": {"type": "integer", "minimum": 1},
+            "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+            "snapshot_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+            "snapshot": {"$ref": "../policy/policy-v1.schema.json"}
+          },
+          "required": ["policy_id", "revision", "sha256", "snapshot_sha256", "snapshot"],
+          "additionalProperties": false
+        },
+        "profile": {"enum": ["trial", "full"]},
+        "prompt_templates": {
+          "type": "object",
+          "minProperties": 1,
+          "patternProperties": {
+            "^[a-z][a-z0-9_]*$": {
+              "type": "object",
+              "properties": {
+                "revision": {"type": "integer", "minimum": 1},
+                "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+              },
+              "required": ["revision", "sha256"],
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "conditions": {
+      "type": "array",
+      "items": {
+        "$ref": "../../common/common-v1.schema.json#/$defs/condition"
+      },
+      "minItems": 1
+    },
+    "modes": {
+      "const": [
+        "nonstream",
+        "stream"
+      ]
+    },
+    "repeats": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 10
+    },
+    "sampling": {
+      "type": "object",
+      "properties": {
+        "temperature": {
+          "const": 0
+        },
+        "seed": {
+          "const": 42
+        },
+        "concurrency": {
+          "const": 1
+        }
+      },
+      "required": [
+        "temperature",
+        "seed",
+        "concurrency"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "dataset",
+    "build_id",
+    "tasks_sha256",
+    "task_count",
+    "source",
+    "conditions",
+    "modes",
+    "repeats",
+    "sampling"
+  ],
+  "additionalProperties": false
+}

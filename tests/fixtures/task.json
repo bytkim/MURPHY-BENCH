@@ -1,0 +1,7 @@
+{
+  "schema_version": "1",
+  "task_id": "multibyte-example",
+  "prompt": "Repeat exactly: A€B",
+  "expected": "A€B",
+  "verifier": {"name": "exact_match", "settings": {"normalizer": {"mode": "identity"}}}
+}

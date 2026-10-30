@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MURPHY v1 target",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1"
+    },
+    "target_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "base_url": {
+      "type": "string",
+      "pattern": "^http://127\\.0\\.0\\.1:[0-9]+$"
+    },
+    "model_path": {
+      "type": "string"
+    },
+    "binary_path": {
+      "type": "string"
+    },
+    "source_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "model_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "binary_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "runtime_config": {
+      "$ref": "../../common/common-v1.schema.json#/$defs/fingerprint/properties/runtime_config"
+    },
+    "reasoning_capable": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "schema_version",
+    "target_id",
+    "base_url",
+    "model_path",
+    "binary_path",
+    "source_commit",
+    "model_sha256",
+    "binary_sha256",
+    "runtime_config",
+    "reasoning_capable"
+  ],
+  "additionalProperties": false
+}

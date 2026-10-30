@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MURPHY v1 exact-match settings",
+  "type": "object",
+  "properties": {
+    "normalizer": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "enum": [
+            "identity",
+            "strip"
+          ]
+        }
+      },
+      "required": [
+        "mode"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "normalizer"
+  ],
+  "additionalProperties": false
+}

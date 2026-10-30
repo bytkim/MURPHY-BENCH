@@ -1,0 +1,3 @@
+Repeat the following $count lines exactly, including the braces, emojis, spaces, and names. Preserve their order. Return only those lines.
+
+$entries

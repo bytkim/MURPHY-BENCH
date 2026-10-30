@@ -1,0 +1,275 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MURPHY v2 reference checks and five measurements",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "2"
+    },
+    "build_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "left_run_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "right_run_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "condition_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "mode": {
+      "enum": [
+        "nonstream",
+        "stream"
+      ]
+    },
+    "left": {
+      "$ref": "comparison-v1.schema.json#/properties/left"
+    },
+    "right": {
+      "$ref": "comparison-v1.schema.json#/properties/right"
+    },
+    "numerical": {
+      "$ref": "comparison-v1.schema.json#/properties/numerical"
+    },
+    "references": {
+      "type": "object",
+      "properties": {
+        "model_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "vocabulary": {
+          "type": "object",
+          "properties": {
+            "decoder": {
+              "type": "string"
+            },
+            "tokenizer_model": {
+              "type": "string"
+            },
+            "token_count": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "vocabulary_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "decoder",
+            "tokenizer_model",
+            "token_count",
+            "vocabulary_sha256"
+          ],
+          "additionalProperties": false
+        },
+        "left_nonstream_run_id": {
+          "$ref": "../../common/common-v1.schema.json#/$defs/id"
+        },
+        "right_nonstream_run_id": {
+          "$ref": "../../common/common-v1.schema.json#/$defs/id"
+        }
+      },
+      "required": [
+        "model_sha256",
+        "vocabulary",
+        "left_nonstream_run_id",
+        "right_nonstream_run_id"
+      ],
+      "additionalProperties": false
+    },
+    "measurements": {
+      "type": "object",
+      "properties": {
+        "token_level_coverage": {
+          "type": "object",
+          "properties": {
+            "left": {
+              "$ref": "#/$defs/metric"
+            },
+            "right": {
+              "$ref": "#/$defs/metric"
+            }
+          },
+          "required": [
+            "left",
+            "right"
+          ],
+          "additionalProperties": false
+        },
+        "complete_response_rate": {
+          "type": "object",
+          "properties": {
+            "left": {
+              "$ref": "#/$defs/metric"
+            },
+            "right": {
+              "$ref": "#/$defs/metric"
+            }
+          },
+          "required": [
+            "left",
+            "right"
+          ],
+          "additionalProperties": false
+        },
+        "actual_output_exposure": {
+          "type": "object",
+          "properties": {
+            "left": {
+              "$ref": "#/$defs/metric"
+            },
+            "right": {
+              "$ref": "#/$defs/metric"
+            }
+          },
+          "required": [
+            "left",
+            "right"
+          ],
+          "additionalProperties": false
+        },
+        "task_compliance": {
+          "type": "object",
+          "properties": {
+            "left": {
+              "$ref": "#/$defs/metric"
+            },
+            "right": {
+              "$ref": "#/$defs/metric"
+            }
+          },
+          "required": [
+            "left",
+            "right"
+          ],
+          "additionalProperties": false
+        },
+        "numerical_agreement": {
+          "$ref": "#/$defs/metric"
+        }
+      },
+      "required": [
+        "token_level_coverage",
+        "complete_response_rate",
+        "actual_output_exposure",
+        "task_compliance",
+        "numerical_agreement"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "build_id",
+    "left_run_id",
+    "right_run_id",
+    "task_id",
+    "condition_id",
+    "mode",
+    "left",
+    "right",
+    "numerical",
+    "references",
+    "measurements"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "metric": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "available",
+            "partial",
+            "unavailable"
+          ]
+        },
+        "reference": {
+          "type": "string"
+        },
+        "numerator": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "denominator": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "details": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "status",
+        "reference",
+        "numerator",
+        "denominator",
+        "value",
+        "details"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unavailable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "denominator": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "value": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

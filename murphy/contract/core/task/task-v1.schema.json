@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MURPHY v1 task",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1"
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "prompt": {
+      "type": "string"
+    },
+    "expected": {
+      "type": "string"
+    },
+    "verifier": {
+      "$ref": "../../common/common-v1.schema.json#/$defs/verifier"
+    }
+  },
+  "required": [
+    "schema_version",
+    "task_id",
+    "prompt",
+    "expected",
+    "verifier"
+  ],
+  "additionalProperties": false
+}

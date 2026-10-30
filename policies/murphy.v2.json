@@ -1,0 +1,21 @@
+{
+  "schema_version": "1",
+  "policy_id": "murphy",
+  "revision": 2,
+  "model": {"repository": "Qwen/Qwen3.5-9B", "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a"},
+  "selection": {"seed": 42, "method": "sha256-canonical-json-seed-namespace-id"},
+  "languages": {
+    "fixed": ["eng_Latn", "rus_Cyrl", "spa_Latn", "arb_Arab", "jpn_Jpan"],
+    "chinese": "higher-pooled-split-rate-ties-Hans"
+  },
+  "datasets": {
+    "flores_plus": {"revision": "1147e2dc59f37fbb5c22fd8478770de02cd399f9", "split": "dev", "probe_ids": 150, "prompt_revision": 1},
+    "belebele": {"revision": "7899cdfa4e1e0d733fd77c848e2c273cb1d32be2", "probe_ids": 50, "prompt_revision": 1},
+    "unicode_emoji": {"version": "17.0.0", "pool_per_family": 60, "grouping": {"strategy": "balanced-families-v1", "entries_per_family": 2}, "prompt_revision": 3}
+  },
+  "profiles": {
+    "trial": {"flores_ids": 3, "belebele_ids": 2, "emoji_tasks": 20},
+    "full": {"flores_ids": 150, "belebele_ids": 50, "emoji_tasks": 300}
+  },
+  "request": {"max_tokens": 384, "repeats": 2}
+}

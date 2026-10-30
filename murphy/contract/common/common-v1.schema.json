@@ -1,0 +1,193 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MURPHY v1 shared definitions",
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "condition": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        "task_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "endpoint": {
+          "enum": [
+            "/completion",
+            "/v1/chat/completions"
+          ]
+        },
+        "stop": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "max_tokens": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1024
+        },
+        "reasoning": {
+          "enum": [
+            "off",
+            "on"
+          ]
+        },
+        "literal_grammar": {
+          "type": "boolean"
+        },
+        "grade": {
+          "type": "boolean"
+        },
+        "prompt_wrapper": {
+          "type": "object",
+          "properties": {"prefix": {"type": "string"}, "suffix": {"type": "string"}},
+          "required": ["prefix", "suffix"],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "task_ids",
+        "endpoint",
+        "stop",
+        "max_tokens",
+        "reasoning",
+        "literal_grammar",
+        "grade"
+      ],
+      "additionalProperties": false
+    },
+    "fingerprint": {
+      "type": "object",
+      "properties": {
+        "model_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "binary_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "runtime_config": {
+          "type": "object",
+          "properties": {
+            "backend": {
+              "enum": ["cpu", "cuda"]
+            },
+            "threads": {
+              "const": 1
+            },
+            "parallel": {
+              "const": 1
+            },
+            "special": {
+              "const": false
+            },
+            "backend_sampling": {
+              "const": false
+            },
+            "context_size": {"type": "integer", "minimum": 1},
+            "batch_size": {"type": "integer", "minimum": 1},
+            "ubatch_size": {"type": "integer", "minimum": 1},
+            "gpu_layers": {"type": "integer", "minimum": 0},
+            "flash_attention": {"enum": ["on", "off", "auto"]}
+          },
+          "required": [
+            "backend",
+            "threads",
+            "parallel",
+            "special",
+            "backend_sampling"
+          ],
+          "allOf": [{"if": {"properties": {"backend": {"const": "cuda"}}},
+                     "then": {"required": ["context_size", "batch_size", "ubatch_size", "gpu_layers", "flash_attention"]}}],
+          "additionalProperties": false
+        },
+        "server_props": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "model_sha256",
+        "binary_sha256",
+        "source_commit",
+        "runtime_config",
+        "server_props"
+      ],
+      "additionalProperties": false
+    },
+    "normalizer": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "enum": [
+            "identity",
+            "strip"
+          ]
+        }
+      },
+      "required": [
+        "mode"
+      ],
+      "additionalProperties": false
+    },
+    "verifier": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "const": "exact_match"
+        },
+        "settings": {
+          "type": "object",
+          "properties": {
+            "normalizer": {
+              "type": "object",
+              "properties": {
+                "mode": {
+                  "enum": [
+                    "identity",
+                    "strip"
+                  ]
+                }
+              },
+              "required": [
+                "mode"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "normalizer"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "name",
+        "settings"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

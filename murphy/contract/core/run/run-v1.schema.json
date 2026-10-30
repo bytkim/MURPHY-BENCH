@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MURPHY v1 run",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1"
+    },
+    "build_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "target_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "manifest_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "fingerprint": {
+      "$ref": "../../common/common-v1.schema.json#/$defs/fingerprint"
+    },
+    "created_at": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "build_id",
+    "run_id",
+    "target_id",
+    "manifest_sha256",
+    "fingerprint",
+    "created_at"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,3 @@
+Output one line in exactly this format: {emoji | name}. The opening { and closing } are literal characters and must appear in your answer. Replace emoji and name with the supplied emoji and English name, preserving both exactly. Use one space on each side of |. Return only that single line.
+Emoji: $sequence
+English name: $name

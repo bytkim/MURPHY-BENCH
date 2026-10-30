@@ -1,0 +1,236 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MURPHY v1 comparison",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1"
+    },
+    "build_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "left_run_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "right_run_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "condition_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "mode": {
+      "enum": [
+        "nonstream",
+        "stream"
+      ]
+    },
+    "left": {
+      "type": "object",
+      "required": [
+        "stable_repeats",
+        "complete_responses",
+        "complete_response_rate",
+        "attempts",
+        "grades",
+        "checks_by_repeat"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "stable_repeats": {
+          "type": "boolean"
+        },
+        "complete_responses": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "complete_response_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "attempts": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "grades": {
+          "type": "array",
+          "items": {
+            "$ref": "../../core/grade/grade-v1.schema.json"
+          }
+        },
+        "checks_by_repeat": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 3,
+            "items": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "enum": [
+                    "missing_records",
+                    "wrong_token_identities",
+                    "byte_label_mismatches",
+                    "numerical_disagreement"
+                  ]
+                },
+                "status": {
+                  "enum": [
+                    "pass",
+                    "fail",
+                    "unavailable"
+                  ]
+                },
+                "reference": {
+                  "type": "string"
+                },
+                "details": {
+                  "type": "object"
+                }
+              },
+              "required": [
+                "category",
+                "status",
+                "reference",
+                "details"
+              ],
+              "additionalProperties": false
+            }
+          }
+        }
+      }
+    },
+    "right": {
+      "type": "object",
+      "required": [
+        "stable_repeats",
+        "complete_responses",
+        "complete_response_rate",
+        "attempts",
+        "grades",
+        "checks_by_repeat"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "stable_repeats": {
+          "type": "boolean"
+        },
+        "complete_responses": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "complete_response_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "attempts": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "grades": {
+          "type": "array",
+          "items": {
+            "$ref": "../../core/grade/grade-v1.schema.json"
+          }
+        },
+        "checks_by_repeat": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 3,
+            "items": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "enum": [
+                    "missing_records",
+                    "wrong_token_identities",
+                    "byte_label_mismatches",
+                    "numerical_disagreement"
+                  ]
+                },
+                "status": {
+                  "enum": [
+                    "pass",
+                    "fail",
+                    "unavailable"
+                  ]
+                },
+                "reference": {
+                  "type": "string"
+                },
+                "details": {
+                  "type": "object"
+                }
+              },
+              "required": [
+                "category",
+                "status",
+                "reference",
+                "details"
+              ],
+              "additionalProperties": false
+            }
+          }
+        }
+      }
+    },
+    "numerical": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "enum": [
+            "missing_records",
+            "wrong_token_identities",
+            "byte_label_mismatches",
+            "numerical_disagreement"
+          ]
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "fail",
+            "unavailable"
+          ]
+        },
+        "reference": {
+          "type": "string"
+        },
+        "details": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "category",
+        "status",
+        "reference",
+        "details"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "build_id",
+    "left_run_id",
+    "right_run_id",
+    "task_id",
+    "condition_id",
+    "mode",
+    "left",
+    "right",
+    "numerical"
+  ],
+  "additionalProperties": false
+}

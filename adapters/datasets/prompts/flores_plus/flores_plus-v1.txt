@@ -1,0 +1,2 @@
+Repeat the following sentence exactly. Return only the sentence.
+$text

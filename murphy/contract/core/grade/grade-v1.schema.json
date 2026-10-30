@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MURPHY v1 grade",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1"
+    },
+    "build_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "target_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "condition_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "mode": {
+      "enum": [
+        "nonstream",
+        "stream"
+      ]
+    },
+    "repeat": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "response_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "pass": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "reason": {
+      "enum": [
+        "exact_match",
+        "answer_mismatch",
+        "intentional_condition",
+        "incomplete_transport"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "build_id",
+    "run_id",
+    "target_id",
+    "task_id",
+    "condition_id",
+    "mode",
+    "repeat",
+    "response_sha256",
+    "pass",
+    "reason"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,3 @@
+Read the passage and choose the correct answer. Return only the answer letter, a period, a space, and the complete original text of that choice, preserving its language.
+
+$text
