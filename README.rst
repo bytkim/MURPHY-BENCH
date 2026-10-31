@@ -5,6 +5,17 @@ MURPHY compares the token and probability records returned by two llama.cpp
 builds. It keeps instruction-following compliance separate from record
 integrity, and reports unavailable measurements separately from passes.
 
+Dataset, report and related PR
+------------------------------
+
+* `Dataset and evidence <https://huggingface.co/datasets/bytkim/MURPHY-BENCHMARK/tree/c930bbd09898797c3a2b8206859866d596be56f9>`_: the exact 1,500 evaluated tasks, build manifests, raw evaluation results and bisect evidence.
+* `Evaluation report <https://huggingface.co/datasets/bytkim/MURPHY-BENCHMARK/blob/c930bbd09898797c3a2b8206859866d596be56f9/evidence/evaluation-report.rst>`_: baseline versus patched results, separated by dataset, endpoint and mode.
+* `llama.cpp PR #31244 <https://github.com/ggml-org/llama.cpp/pull/31244>`_: the related token-ID and probability-record buffering fixes.
+
+The 24,000-request evaluation used baseline ``8a199ad31a7e`` and patched
+``636d96d2e686``, not the current two-commit PR stack. See
+`evaluation provenance <docs/provenance.rst>`_ for full source and model pins.
+
 Quick start (no server required)
 -------------------------------
 
